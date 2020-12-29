@@ -44,8 +44,12 @@
 (defn edit-tasks
   ""
   [options]
-  (println "edit " options)
-  )
+  (let [today (.format (java.text.SimpleDateFormat. "yyyy-M-dd") (new java.util.Date))
+        date (if (nil? (:day options)) today (:day options))
+        task (db/update-task options)]
+    (if (= task false)
+      (cli/exit 1 "\nSome error happened, task not updated!")
+      (cli/exit 0 "\nThe task updated successfully."))))
 
 (defn delete-tasks
   ""
