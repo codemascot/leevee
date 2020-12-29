@@ -50,14 +50,16 @@
         task (db/update-task options)]
     (list-tasks options)
     (if (= task false)
-      (cli/exit 1 "\nSome error happened, task update failed!")
-      (cli/exit 0 "\nThe task updated successfully."))))
+      (cli/exit 0 "\nSome error happened, task update failed!")
+      (cli/exit 1 "\nThe task updated successfully."))))
 
 (defn delete-tasks
   ""
   [options]
-  (println "delete " options)
-  )
+  (let [row (first (db/delete-tasks options))]
+    (if (> row 0)
+      (cli/exit 1 "\nAll the data deleted successfully.")
+      (cli/exit 0 "\nSome error happened, data delete failed!"))))
 
 (defn -main [& args]
   (let [{:keys [action options exit-message ok?]} (cli/validate-args args)]
