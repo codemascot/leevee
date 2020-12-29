@@ -7,6 +7,8 @@
 (def cli-options
   [["-d" "--day DATE" "Date in yyyy-mm-dd format"]
    ["-t" "--task TASK ID" "The exact task ID"]
+   ["-s" "--status TASK STATUS" "Task status"]
+   ["-b" "--body TASK STATUS" "Task status"]
    ["-o" "--order TASK ORDER" "The task order for a specific day"]])
 
 (defn usage [options-summary]
