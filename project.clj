@@ -6,8 +6,8 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/tools.cli "1.0.194"]
                  [org.clojure/java.jdbc "0.7.5"]
-                 [environ "1.2.0"]
+                 [clj-time "0.15.2"]
                  [org.xerial/sqlite-jdbc "3.34.0"]
                  [mysql/mysql-connector-java "8.0.22"]]
-  :plugins [[lein-environ "1.2.0"]]
-  :repl-options {:init-ns leevee.core})
+  :repl-options {:init-ns leevee.core}
+  :main leevee.core/-main)
