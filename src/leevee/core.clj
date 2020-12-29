@@ -18,6 +18,15 @@
         (flush)
         (swap! tasks assoc-in [:tasks (inc i)] (util/trim-text chars (read-line))))))
 
+(defn list-tasks
+  ""
+  [options]
+  (let [today (.format (java.text.SimpleDateFormat. "yyyy-M-dd") (new java.util.Date))
+        date (if (nil? (:day options)) today (:day options))
+        result (db/retrive-tasks date)]
+    (println "\nTask list for" date ":\n")
+    (doseq [i (into [] (db/retrive-tasks date))] (println (str "[" (:o i) "] " "[" (:s i) "]") (:t i)))))
+
 (defn add-tasks
   ""
   [options]
@@ -27,19 +36,11 @@
         date (if (nil? (:day options)) today (:day options))]
     (if (db/exists? "task_dates" "task_date" date)
       (cli/exit 1 "Tasks already exist for this date!")
-      (tasks-input number chars date)))
-  (db/insert-tasks @tasks)
-  ;; TODO: Need to make this msg conditional on insert-tasks
-  (cli/exit 0 "\nThe tasks added successfully."))
-
-(defn list-tasks
-  ""
-  [options]
-  (let [today (.format (java.text.SimpleDateFormat. "yyyy-M-dd") (new java.util.Date))
-        date (if (nil? (:day options)) today (:day options))
-        result (db/retrive-tasks date)]
-    (println "\nTask list for" date ":\n")
-    (doseq [i (into [] (db/retrive-tasks date))] (println (str "[" (:o i) "] " "[" (:s i) "]") (:t i) (str "(ID:" (:i i) ")") ))))
+      (tasks-input number chars date))
+    (if (= (count (db/insert-tasks @tasks)) number)
+      (do (list-tasks options)
+        (cli/exit 0 "\nTasks added successfully.\n"))
+      (cli/exit 1 "\nSome error happened, tasks addition failed!"))))
 
 (defn edit-tasks
   ""
@@ -47,8 +48,9 @@
   (let [today (.format (java.text.SimpleDateFormat. "yyyy-M-dd") (new java.util.Date))
         date (if (nil? (:day options)) today (:day options))
         task (db/update-task options)]
+    (list-tasks options)
     (if (= task false)
-      (cli/exit 1 "\nSome error happened, task not updated!")
+      (cli/exit 1 "\nSome error happened, task update failed!")
       (cli/exit 0 "\nThe task updated successfully."))))
 
 (defn delete-tasks
