@@ -59,3 +59,15 @@
     (if (and id status)
       (jdbc/execute! db ["UPDATE tasks SET status = ?, task = ? WHERE id = ?" status body id])
       false)))
+
+(defn delete-tasks
+  ""
+  [options]
+  (let [date (:day options)
+        task (:order options)
+        tasks (into [] (retrive-tasks (:day options)))]
+    (if (nil? task)
+      (do (if (> (count tasks) 0)
+            (jdbc/execute! db [(str "DELETE FROM tasks WHERE id IN (" (str/join ", " (map (fn [v] (:i v)) tasks)) ")")]))
+          (jdbc/execute! db [(str "DELETE FROM task_dates WHERE task_date = '" date "'")]))
+      (jdbc/execute! db ["DELETE FROM tasks WHERE id = ?" (-> (get-task-by-day-order date task) first :i)]))))
