@@ -1,6 +1,7 @@
 (ns leevee.db
   ""
-  (:require [clojure.java.jdbc :as jdbc]
+  (:require [clojure.string :as str]
+            [clojure.java.jdbc :as jdbc]
             [clojure.edn :as edn]))
 
 (def db (-> (slurp ".env") edn/read-string :env :db))
