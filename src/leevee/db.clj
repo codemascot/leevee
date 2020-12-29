@@ -36,3 +36,25 @@
          LEFT JOIN task_dates on task_dates.id = task_date_pivot.task_date
  WHERE task_dates.task_date = ?
  ORDER BY task_date_pivot.task_order" date]))
+
+(defn get-task-by-day-order
+  ""
+  [day order]
+  (jdbc/query db ["SELECT tasks.id AS i, tasks.task AS t, tasks.status AS s, task_date_pivot.task_order AS o
+  FROM tasks
+       LEFT JOIN task_date_pivot on tasks.id = task_date_pivot.task
+       LEFT JOIN task_dates on task_dates.id = task_date_pivot.task_date
+ WHERE task_dates.task_date = ?
+       AND task_date_pivot.task_order = ?
+ ORDER BY task_date_pivot.task_order" day order]))
+
+(defn update-task
+  ""
+  [options]
+  (let [task (get-task-by-day-order (:day options) (:order options))
+        id (-> task first :i)
+        status (if (nil? (:status options)) (-> task first :s) (:status options))
+        body (if (nil? (:body options)) (-> task first :t) (:body options))]
+    (if (and id status)
+      (jdbc/execute! db ["UPDATE tasks SET status = ?, task = ? WHERE id = ?" status body id])
+      false)))
