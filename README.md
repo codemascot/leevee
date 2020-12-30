@@ -11,11 +11,12 @@ Actually this is my practice DB project with *Clojure*. As of **30 Dec 2020**, I
 2. Run the migration. Also for MySQL you can import `db/leevee.sql` to create the DB.
 
 3. Run the program with `lein run`.
+
 Example: 
 ```
 lein run add --day "2020-12-29"
 lein run edit --day "2020-12-29" --order 2 --status "DONE"
-```.
+```
 
 ## License
 
