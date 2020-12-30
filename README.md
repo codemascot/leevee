@@ -2,7 +2,7 @@
 This is a todo list app based on *Ivy Lee* method, written in *Clojure*.
 
 ## Background
-Actually this is my practice DB project with *Clojure*. As of **30 Dec 2020**, I'm writing *Clojure* for 17 days and this is my second project. And my first project is the *WooCommerce* REST API client in *Clojure* ([wc-api-clj](https://github.com/codemascot/wc-api-clj)). Hereby, I wanted to make my second one something DB interaction oriented. But web app seemed too boring to me as I've come from web development background. Also I didn't have much exposure to *CLI* app writing world. So, I took this chance to make a CLI app with DB interaction. Yes, I'm aware of the cost of fire up JVM whenever this app is initiating, still I've grabbed the chance to play with *Clojure* as well as *CLI*.
+Actually this is my practice DB project with *Clojure*. As of **30 Dec 2020**, I'm writing *Clojure* for 17 days and this is my second project. My first project is the *WooCommerce* REST API client in *Clojure* ([wc-api-clj](https://github.com/codemascot/wc-api-clj)). Hereby, I wanted to make my second one something DB interaction oriented. But web app seemed too boring to me as I've come from web development background. Also I didn't have much exposure to *CLI* app writing world. So, I took this chance to make a CLI app with DB interaction. Yes, I'm aware of the cost of fire up JVM whenever this app is initiating, still I've grabbed the chance to play with *Clojure* as well as *CLI*.
 
 ## Setup
 
