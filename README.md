@@ -12,7 +12,7 @@ Actually this is my practice DB project with *Clojure*. As of **30 Dec 2020**, I
 
 3. Run the program with `lein run`.
 
-Example: 
+## Example: 
 ```
 lein run add --day "2020-12-29"
 lein run edit --day "2020-12-29" --order 2 --status "DONE"
